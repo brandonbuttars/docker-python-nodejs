@@ -82,7 +82,7 @@ def main(dry_run, debug):
     versions = load_versions()
 
     # Build tag and release docker images
-    build_or_update(versions.versions, dry_run, debug)
+    build_or_update(versions, dry_run, debug)
 
     # FIXME(perf): Generate a CircleCI config file with a workflow (parallel) and trigger this workflow via the API.
     # Ref: https://circleci.com/docs/2.0/api-job-trigger/
