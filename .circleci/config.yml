@@ -40,13 +40,3 @@ workflows:
               branches:
                 only:
                   - master
-  #  twice_a_day:
-  #    triggers:
-  #      - schedule:
-  #          cron: "0 0,12 * * *"  # Twice a day at 00:00 and 12:00
-  #          filters:
-  #            branches:
-  #              only:
-  #                - master
-     jobs:
-       - build
