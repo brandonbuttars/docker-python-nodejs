@@ -16,7 +16,7 @@ RUN grep " node-v%%NODEJS_CANONICAL%%-linux-x64-musl.tar.xz\$" SHASUMS256.txt | 
 RUN tar -xf "node-v%%NODEJS_CANONICAL%%-linux-x64-musl.tar.xz"
 
 FROM python:%%PYTHON_IMAGE%%
-MAINTAINER Nikolai R Kristiansen <nikolaik@gmail.com>
+MAINTAINER Brandon Buttars <brandonbuttars@gmail.com>
 
 RUN addgroup -g 1000 pn && adduser -u 1000 -G pn -s /bin/sh -D pn
 RUN apk add libstdc++

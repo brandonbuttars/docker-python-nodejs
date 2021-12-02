@@ -6,7 +6,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "e7:42:fa:02:36:d2:51:75:6d:a3:2c:09:ed:d8:36:7b"
+            - "18:1c:84:41:3d:e6:16:ba:6e:00:c7:aa:f9:2d:38:60"
       - checkout
       - run:
           name: Verify on master branch
@@ -40,13 +40,13 @@ workflows:
               branches:
                 only:
                   - master
-   twice_a_day:
-     triggers:
-       - schedule:
-           cron: "0 0,12 * * *"  # Twice a day at 00:00 and 12:00
-           filters:
-             branches:
-               only:
-                 - master
+  #  twice_a_day:
+  #    triggers:
+  #      - schedule:
+  #          cron: "0 0,12 * * *"  # Twice a day at 00:00 and 12:00
+  #          filters:
+  #            branches:
+  #              only:
+  #                - master
      jobs:
        - build

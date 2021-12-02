@@ -2,7 +2,7 @@
 # python: %%PYTHON_CANONICAL%%
 # nodejs: %%NODEJS_CANONICAL%%
 FROM python:%%PYTHON_IMAGE%%
-MAINTAINER Nikolai R Kristiansen <nikolaik@gmail.com>
+MAINTAINER Brandon Buttars <brandonbuttars@gmail.com>
 
 RUN groupadd --gid 1000 pn && useradd --uid 1000 --gid pn --shell /bin/bash --create-home pn
 ENV POETRY_HOME=/usr/local
