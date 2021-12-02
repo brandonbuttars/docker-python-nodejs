@@ -43,8 +43,6 @@ def load_versions():
 
 
 def build_or_update(versions, dry_run=False, debug=False):
-    versions = {ver["key"]: ver for ver in versions}
-
     # Login to docker hub
     docker_client = docker.from_env()
     dockerhub_username = os.getenv("DOCKERHUB_USERNAME")
@@ -80,10 +78,11 @@ def build_or_update(versions, dry_run=False, debug=False):
 
 
 def main(dry_run, debug):
+    # Get version data from json file
     versions = load_versions()
 
     # Build tag and release docker images
-    build_or_update(versions, dry_run, debug)
+    build_or_update(versions.versions, dry_run, debug)
 
     # FIXME(perf): Generate a CircleCI config file with a workflow (parallel) and trigger this workflow via the API.
     # Ref: https://circleci.com/docs/2.0/api-job-trigger/
