@@ -20,5 +20,8 @@ RUN \
   apt-mark hold nodejs && \
   pip install -U pip && pip install pipenv && \
   npm i -g npm@^%%NPM_VERSION%% && \
+  npm cache clean -f && \
+  npm i -g n && \
+  n %%NODEJS_CANONICAL%% && \
   wget -q -O - https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python - && \
   rm -rf /var/lib/apt/lists/*

@@ -16,5 +16,8 @@ RUN \
   apt-get install -yqq nodejs yarn && \
   pip install -U pip && pip install pipenv && \
   npm i -g npm@^8 && \
+  npm cache clean -f && \
+  npm i -g n && \
+  n 16.13.0 && \
   curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python - && \
   rm -rf /var/lib/apt/lists/*

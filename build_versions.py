@@ -14,7 +14,7 @@ DOCKER_IMAGE_NAME = "brandonbuttars/python-nodejs"
 VERSIONS_PATH = Path("versions.json")
 
 
-def _fetch_node_gpg_keys():
+def fetch_node_gpg_keys():
     url = "https://raw.githubusercontent.com/nodejs/docker-node/master/keys/node.keys"
     return requests.get(url).text.replace("\n", " ")
 
@@ -53,7 +53,7 @@ def build_or_update(versions, dry_run=False, debug=False):
         print("Is env var DOCKERHUB_USERNAME and DOCKERHUB_PASSWORD set correctly?")
         exit(1)
 
-    node_gpg_keys = _fetch_node_gpg_keys()
+    node_gpg_keys = fetch_node_gpg_keys()
     # Build, tag and push images
     for version in versions:
         dockerfile = render_dockerfile(version, node_gpg_keys)

@@ -22,6 +22,9 @@ RUN addgroup -g 1000 pn && adduser -u 1000 -G pn -s /bin/sh -D pn
 RUN apk add libstdc++
 COPY --from=builder /node-v%%NODEJS_CANONICAL%%-linux-x64-musl /usr/local
 RUN npm i -g npm@^%%NPM_VERSION%% yarn
+RUN npm cache clean -f
+RUN npm i -g n
+RUN n %%NODEJS_CANONICAL%%
 RUN pip install -U pip && pip install pipenv
 # Poetry
 # Mimic what install-poetry.py does without the flexibility (platforms, install sources, etc).

@@ -5,7 +5,7 @@
       "python": "3.7.12",
       "python_canonical": "3.7.12",
       "python_image": "3.7.12-buster",
-      "nodejs": "16.13.0",
+      "nodejs": "16",
       "nodejs_canonical": "16.13.0",
       "distro": "buster"
     },
@@ -14,7 +14,7 @@
       "python": "3.7.12",
       "python_canonical": "3.7.12",
       "python_image": "3.7.12-slim",
-      "nodejs": "16.13.0",
+      "nodejs": "16",
       "nodejs_canonical": "16.13.0",
       "distro": "slim"
     },
@@ -23,7 +23,7 @@
       "python": "3.7.12",
       "python_canonical": "3.7.12",
       "python_image": "3.7.12-alpine",
-      "nodejs": "16.13.0",
+      "nodejs": "16",
       "nodejs_canonical": "16.13.0",
       "distro": "alpine"
     }
