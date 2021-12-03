@@ -40,7 +40,6 @@ docker run -it brandonbuttars/python-nodejs bash
 | -------- | ------ | ------- | ------ |
 | `buster` | 3.7.12 | 16.13.0 | buster |
 | `slim`   | 3.7.12 | 16.13.0 | slim   |
-| `alpine` | 3.7.12 | 16.13.0 | alpine |
 
 ### Use as base image
 
