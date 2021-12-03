@@ -12,6 +12,7 @@ import requests
 
 DOCKER_IMAGE_NAME = "brandonbuttars/python-nodejs"
 VERSIONS_PATH = Path("versions.json")
+LATEST_NAME = "buster"
 
 
 def fetch_node_gpg_keys():
@@ -41,6 +42,29 @@ def load_versions():
     with VERSIONS_PATH.open() as fp:
         return json.load(fp)["versions"]
 
+def build_and_push(docker_client, version, node_gpg_keys, dry_run=False, debug=False, latest=False):
+    dockerfile = render_dockerfile(version, node_gpg_keys)
+    # docker build wants bytes
+    with BytesIO(dockerfile.encode()) as fileobj:
+        version_name = 'latest' if latest else version['key']
+        tag = f"{DOCKER_IMAGE_NAME}:{version_name}"
+
+        nodejs_version = version["nodejs_canonical"]
+        python_version = version["python_canonical"]
+        print(
+            f"Building image {version['key']} python: {python_version} nodejs: {nodejs_version} ...",
+            end="",
+            flush=True,
+        )
+        if not dry_run:
+            docker_client.images.build(fileobj=fileobj, tag=tag, rm=True, pull=True)
+        if debug:
+            with Path(f"debug-{version_name}.Dockerfile").open("w") as debug_file:
+                debug_file.write(fileobj.read().decode("utf-8"))
+        print(f" pushing...", flush=True)
+        if not dry_run:
+            docker_client.images.push(DOCKER_IMAGE_NAME, version_name)
+
 
 def build_or_update(versions, dry_run=False, debug=False):
     # Login to docker hub
@@ -56,25 +80,10 @@ def build_or_update(versions, dry_run=False, debug=False):
     node_gpg_keys = fetch_node_gpg_keys()
     # Build, tag and push images
     for version in versions:
-        dockerfile = render_dockerfile(version, node_gpg_keys)
-        # docker build wants bytes
-        with BytesIO(dockerfile.encode()) as fileobj:
-            tag = f"{DOCKER_IMAGE_NAME}:{version['key']}"
-            nodejs_version = version["nodejs_canonical"]
-            python_version = version["python_canonical"]
-            print(
-                f"Building image {version['key']} python: {python_version} nodejs: {nodejs_version} ...",
-                end="",
-                flush=True,
-            )
-            if not dry_run:
-                docker_client.images.build(fileobj=fileobj, tag=tag, rm=True, pull=True)
-            if debug:
-                with Path(f"debug-{version['key']}.Dockerfile").open("w") as debug_file:
-                    debug_file.write(fileobj.read().decode("utf-8"))
-            print(f" pushing...", flush=True)
-            if not dry_run:
-                docker_client.images.push(DOCKER_IMAGE_NAME, version["key"])
+        build_and_push(docker_client, version, node_gpg_keys, dry_run, debug)
+        # If key equals the latest then build the latest tag
+        if version['key'] == LATEST_NAME:
+            build_and_push(docker_client, version, node_gpg_keys, dry_run, debug, True)
 
 
 def main(dry_run, debug):
