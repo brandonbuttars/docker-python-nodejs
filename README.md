@@ -1,7 +1,4 @@
-[![Pulls](https://img.shields.io/docker/pulls/brandonbuttars/python-nodejs.svg?style=flat-square)](https://hub.docker.com/r/brandonbuttars/python-nodejs/)
-[![CircleCI](https://img.shields.io/circleci/project/github/brandonbuttars/docker-python-nodejs.svg?style=flat-square)](https://circleci.com/gh/brandonbuttars/docker-python-nodejs)
-
-Last updated by Brandon Buttars: 2021-12-02
+[![Pulls](https://img.shields.io/docker/pulls/brandonbuttars/python-nodejs?style=flat-square&logo=docker)](https://hub.docker.com/r/brandonbuttars/python-nodejs/) [![CircleCI](https://img.shields.io/circleci/project/github/brandonbuttars/docker-python-nodejs.svg?style=flat-square&logo=circleci)](https://circleci.com/gh/brandonbuttars/docker-python-nodejs/tree/master) [![Latest Commit](https://img.shields.io/github/last-commit/brandonbuttars/docker-python-nodejs/master?style=flat-square&logo=github)](https://github.com/brandonbuttars/docker-python-nodejs) [![Downloads](https://img.shields.io/github/downloads/brandonbuttars/docker-python-nodejs/total?style=flat-square&logo=github)](https://github.com/brandonbuttars/docker-python-nodejs)
 
 ## 🐳 Python with Node.js
 
@@ -36,10 +33,23 @@ docker build -t brandonbuttars/python-nodejs github.com/brandonbuttars/docker-py
 docker run -it brandonbuttars/python-nodejs bash
 ```
 
-| Tag      | Python | Node.js | Distro |
-| -------- | ------ | ------- | ------ |
-| `buster` | 3.7.12 | 16.13.0 | buster |
-| `slim`   | 3.7.12 | 16.13.0 | slim   |
+| Tag      | Python | Node.js | Distro | Size                                                                                                                                                                    |
+| -------- | ------ | ------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `latest` | 3.7.12 | 16.13.0 | buster | [![Latest](https://img.shields.io/docker/image-size/brandonbuttars/python-nodejs/latest?style=flat-square)](https://hub.docker.com/r/brandonbuttars/python-nodejs/tags) |
+| `buster` | 3.7.12 | 16.13.0 | buster | [![Buster](https://img.shields.io/docker/image-size/brandonbuttars/python-nodejs/buster?style=flat-square)](https://hub.docker.com/r/brandonbuttars/python-nodejs/tags) |
+| `slim`   | 3.7.12 | 16.13.0 | slim   | [![Slim](https://img.shields.io/docker/image-size/brandonbuttars/python-nodejs/slim?style=flat-square)](https://hub.docker.com/r/brandonbuttars/python-nodejs/tags)     |
+
+## CircleCI Pipeline
+
+Every time the repo has a new commit on the `master` branch a new CircleCI build will kick off and build images based on the contents of the `versions.json` file. The pipeline uses the following `Dockerfile` templates for each distribution:
+
+| Distribution | Template                     | Used | Notes                                  |
+| ------------ | ---------------------------- | ---- | -------------------------------------- |
+| `buster`     | `template-buster.Dockerfile` | X    | Used by the `latest` and `buster` tag. |
+| `slim`       | `template-slim.Dockerfile`   | X    | Used by the `slim` tag.                |
+| `alpine`     | `template-alpine.Dockerfile` |      | Not current used.                      |
+
+Any new distributions will require custom template files following the existing template format and naming convention. Each template should be named `template-{distro}.Dockerfile`. The `distro` value should match the `distro` value in the `versions.json` file.
 
 ### Use as base image
 
