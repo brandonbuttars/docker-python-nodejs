@@ -8,20 +8,6 @@ These images are build from `brandonbuttars/docker-python-nodejs` based on `niko
 
 If you're OK using the latest, use [https://hub.docker.com/r/nikolaik/python-nodejs](https://hub.docker.com/r/nikolaik/python-nodejs) and there a ton of different tags and versions you can choose from. I just needed to customize and thin out that list a bit and make sure I kept stability in my pipelines.
 
-The `latest` tag is currently:
-
-- Node: 16.13.0
-- npm: 8.x
-- yarn: latest
-- Python: 3.7.12
-- pip: latest
-- pipenv: latest
-- poetry: latest
-
-## 🏷 Tags
-
-To use a specific combination of Python and Node.js see the following table of available image tags.
-
 ## CircleCI Pipeline
 
 Every time the repo has a new commit on the `master` branch a new CircleCI build will kick off and build images based on the contents of the `versions.json` file. The pipeline uses the following `Dockerfile` templates for each distribution:
@@ -30,7 +16,7 @@ Every time the repo has a new commit on the `master` branch a new CircleCI build
 | ------------ | ---------------------------- | ---- | -------------------------------------- |
 | `buster`     | `template-buster.Dockerfile` | X    | Used by the `latest` and `buster` tag. |
 | `slim`       | `template-slim.Dockerfile`   | X    | Used by the `slim` tag.                |
-| `alpine`     | `template-alpine.Dockerfile` |      | Not current used.                      |
+| `alpine`     | `template-alpine.Dockerfile` |      | Not currently used.                    |
 
 Any new distributions will require custom template files following the existing template format and naming convention. Each template should be named `template-{distro}.Dockerfile`. The `distro` value should match the `distro` value in the `versions.json` file.
 
@@ -44,6 +30,10 @@ docker build -t brandonbuttars/python-nodejs github.com/brandonbuttars/docker-py
 # Run image
 docker run -it brandonbuttars/python-nodejs bash
 ```
+
+## 🏷 Tags
+
+To use a specific combination of Python and Node.js see the following table of available image tags.
 
 | Tag      | Python | Node.js | Distro | Size                                                                                                                                                                    |
 | -------- | ------ | ------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
